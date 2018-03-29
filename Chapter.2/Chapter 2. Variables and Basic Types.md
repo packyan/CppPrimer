@@ -220,7 +220,9 @@ int &refVal; //incorrect reference must be initialized
 ### Exercise 2.16
 
 >Which, if any, of the following assignments are invalid? If they are valid, explain what they do.
-int i = 0, &r1 = i; double d = 0, &r2 = d;
+
+`int i = 0, &r1 = i; double d = 0, &r2 = d;`
+
 >- (a) r2 = 3.14159;
 >- (b) r2 = r1;
 >- (c) i = r2;
@@ -234,7 +236,8 @@ int i = 0, &r1 = i; double d = 0, &r2 = d;
 ### Exercise 2.17
 
 >What does the following code print?
-```c++
+
+```cpp
 int i, &ri = i;
 i = 5; ri = 10;
 std::cout << i << " " << ri << std::endl;
@@ -242,3 +245,69 @@ std::cout << i << " " << ri << std::endl;
 
 `10, 10`
 
+**Note:**
+**pointer**type exactly matches the object it points to.
+> how to use pointer to access objects?
+> use '*'
+
+in c++ program use `nullptr` to represent a null pointer, `int *p = nullptr`,  when compiling need to use `-std=c++11` .
+
+### Exercise 2.18
+
+> Write code to change the value of a pointer. Write code to change the value to which the pointer points.
+
+```cpp
+int x = 666, y = 233;
+int *p = nullptr;
+int p = &x; //change the value of a pointer.
+int *p = y; //change the value to which the pointer points
+```
+
+
+### Exercise 2.19
+
+> Explain the key differences between pointers and references.
+
+**definition**:
+
+the pointer is "points to" any other type.
+
+the reference is "another name" of an **object**.
+
+**key difference**:
+
+1. a reference is another name of an **already existing** object. a pointer is an object in its **own right**.
+2. Once initialized, a reference remains **bound to** its initial object. There is **no way** to rebind a reference to refer to a different object. a pointer can be **assigned** and **copied**.
+3. a reference always get the object to which the reference was initially bound. a single pointer can point to **several different objects** over its lifetime.
+4. a reference must be initialized. a pointer need **not be** initialized at the time it is defined.
+
+**Usage advise**:
+
+check [here](http://www.parashift.com/c%2B%2B-faq-lite/refs-vs-ptrs.html)
+
+### Exercise 2.20
+
+> What does the following program do?
+>
+> ```cpp
+> int i = 42;
+> int *p1 = &i; *p1 = *p1 * *p1;
+> ```
+
+`p1` pointer to `i`, `i`'s value changed to 1764(42*42)
+
+### Exercise 2.21
+
+> Explain each of the following definitions. Indicate whether any are illegal and, if so, why.
+>
+> ```cpp
+> int i = 0;
+> ```
+>
+> - (a) `double* dp = &i;`
+> - (b) `int *ip = i;`
+> - (c) `int *p = &i;`
+
+- (a): illegal, cannot initialize a variable of type `double *` with an rvalue of type `int *` ; `error: cannot convert ‘int*’ to ‘double*’ in initialization`
+- (b): illegal, cannot initialize a variable of type `int *` with an rvalue of type `int` ; `error: invalid conversion from ‘int’ to ‘int*’ [-fpermissive]`
+- (c): legal.
