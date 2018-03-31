@@ -1,4 +1,5 @@
-# Exerise 2.9 - 2.1
+# Chapter 2. Variables and Basic Types
+
 ## Chapter 2.1
 ### Exerise 2.1
 >What are the differences between int, long, long long, and short? Between an unsigned and a signed type? Between a float and a double?
@@ -909,7 +910,7 @@ int main(int argc, char const *argv[])
 
 ```cpp
 #include <iostream>
-#include "Sales_data.h"
+#include "../include/Sales_data.h"
 using std::cout;
 using std::cin;
 using std::endl;
@@ -934,14 +935,14 @@ int main(int argc, char const *argv[])
 }
 ```
 
-#### myh_ex1_22.cpp
+#### myh_ex1_25.cpp
 
 ```cpp
 #include <iostream>
 using std::cout;
 using std::cin;
 using std::endl;
-#include "Sales_data.h"
+#include "../include/Sales_data.h"
 int main(int argc, char const *argv[])
 {
     Sales_data item1, currItem, temp;

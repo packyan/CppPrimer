@@ -2,7 +2,7 @@
 using std::cout;
 using std::cin;
 using std::endl;
-#include "Sales_data.h"
+#include "../include/Sales_data.h"
 int main(int argc, char const *argv[])
 {
 	Sales_data item1, currItem, temp;

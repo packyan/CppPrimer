@@ -1,9 +1,10 @@
 #include <iostream>
 #include <string>
-using std::cout;
-using std::cin;
-using std::endl;
-using std::string;
+// *.h files should not contain using declaration.
+// using std::cout;
+// using std::cin;
+// using std::endl;
+// using std::string;
 
 #ifndef SALES_DATA_H
 #define SALES_DATA_H
@@ -24,7 +25,7 @@ struct Sales_data{
 
 void Sales_data::AddDATA(Sales_data add_item){
 	if(bookNo != add_item.bookNo){
-		cout << "can not add a book with different bookNo" << endl;
+		std::cout << "can not add a book with different bookNo" << std::endl;
 		return;
 	}
 	units_sold += add_item.units_sold;
@@ -41,7 +42,7 @@ void Sales_data::SetDATA(Sales_data set_item){
 }
 
 void Sales_data::Print(){
-	cout << bookNo << ' ' << units_sold  << ' ' << revenue << ' ' << average << endl;
+	std::cout << bookNo << ' ' << units_sold  << ' ' << revenue << ' ' << average << std::endl;
 }
 
 

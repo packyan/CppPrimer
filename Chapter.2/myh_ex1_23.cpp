@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "Sales_data.h"
+#include "../include/Sales_data.h"
 using std::cout;
 using std::cin;
 using std::endl;
