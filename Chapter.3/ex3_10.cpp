@@ -1,3 +1,9 @@
+
+// @Author  Pakcyan
+// @Date    April. 2018
+// @Brief
+// reads a string of characters including punctuation and writes what was read
+// but with the punctuation removed.
 #include <iostream>
 #include <string>
 using std::cin;
