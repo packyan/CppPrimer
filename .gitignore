@@ -2,3 +2,4 @@
 .[oa]
 *~
 *.diff
+.DS_Store
