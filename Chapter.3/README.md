@@ -6,7 +6,7 @@ NOTE: .h file should not contain any using declaration.
 
 ### Exercise 3.1 : **already used**
 
-## Chapter 3.2 SLT string
+## Chapter 3.2 STL String
 
 NOTE:
 there are different ways to initialize a string 
@@ -123,7 +123,7 @@ For example:
 
 The type of `c` is `const char&`. read-only variable is not assignable.
 
-## STL Vector
+## Chapter 3.3 STL Vector
 
 NOTE: `Vector` is a **class template**, ofen called **cantainer**. 
 
@@ -190,6 +190,8 @@ vector<int> ivec{42};
 ```
 
 ### [Exercise 3.19](ex3_19.cpp)
+
+## Chapter 3.4 Iterator introduction
 
 ### Exercise 3.20 : [partA](ex3_20a.cpp) & [partB](ex3_20b.cpp)
 
