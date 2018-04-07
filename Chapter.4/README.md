@@ -330,3 +330,133 @@ reference: [Why the size of a pointer is 4bytes in C++](http://stackoverflow.com
 
 reference: [sizeof operator](http://en.cppreference.com/w/cpp/language/sizeof)
 
+## Chapter 4.10 Comma Operator
+
+### Exercise 4.31
+
+> The program in this section used the prefix increment and decrement operators. Explain why we used prefix and not postfix. What changes would have to be made to use the postfix versions? Rewrite the program using postfix operators.
+
+We prefer use prefix and not postfix, because： 
+
+`Advice: Use Postfix Operators only When Necessary` on `4.5. Increment and Decrement Operators`.
+
+> **Advice: Use Postfix Operators only When Necessary**
+>
+> Readers from a C background might be surprised that we use the prefix increment in the programs we've written. The reason is simple: The prefix version avoids unnecessary work. It increments the value and returns the incremented version.The postfix operator must store the original value so that it can return the unincremented value as its result. If we don’t need the unincremented value, there’s no need for the extra work done by the postfix operator.
+>
+> For ints and pointers, the compiler can optimize away this extra work. For more complicated iterator types, this extra work potentially might be more costly. By habitually using the prefix versions, we do not have to worry about whether the performance difference matters. Moreover—and perhaps more importantly—we can express the intent of our programs more directly.
+
+So, it's just a good habits. And there are no changes if we have to be made to use the postfix versions. Rewrite:
+
+```cpp
+for(vector<int>::size_type ix = 0; ix != ivec.size(); ix++, cnt--)
+    ivec[ix] = cnt;
+```
+
+This is not an appropriate example to discuss the difference of prefix and postfix. Look at the section `Built-in comma operator` on [this page](http://en.cppreference.com/w/cpp/language/operator_other).
+
+---
+
+reference: [Usage of the Built-in Comma Operator](http://stackoverflow.com/questions/22591387/usage-of-the-built-in-comma-operator)
+
+### Exercise 4.32
+
+> Explain the following loop.
+>
+> ```cpp
+> constexpr int size = 5;
+> int ia[size] = {1,2,3,4,5};
+> for (int *ptr = ia, ix = 0;
+>     ix != size && ptr != ia+size;
+>     ++ix, ++ptr) { /* ... */ }
+> ```
+
+`ptr` and `ix` have the same function. The former use a pointer, and the latter use the index of array. we use the loop to through the array.(just choose one from `ptr` and `ix` ）
+
+### Exercise 4.33
+
+> Using Table 4.12 (p. 166) explain what the following expression does:
+>
+> ```cpp
+> someValue ? ++x, ++y : --x, --y
+> ```
+
+Because **comma operator has the most lowest precedence**, the expression can be rewrited as :
+
+```cpp
+(someValue ? ++x, ++y : --x), --y
+```
+
+If someValue is true, then `++x` and `++y`, because comma operator, then `--y`
+so if someValue is true, `++x`  and `y` is not changed.
+
+If someValue is false, then `--x`, and `--y`, so the expression can be rewrited as:
+
+```cpp
+someValue ? (++x, y) : (--x, --y);
+```
+
+### Exercise 4.34
+
+> Given the variable definitions in this section, explain what conversions take place in the following expressions:
+>
+> (a) if (fval)
+> (b) dval = fval + ival;
+> (c) dval + ival * cval;
+
+Remember that you may need to consider the associativity of the operators.
+
+```cpp
+if (fval) // fval converted to bool
+dval = fval + ival; // ival converted to fval, then the result of fval add ival converted to double.
+dval + ival * cval; // cval converted to int, then that int and ival converted to double.
+```
+
+## Exercise 4.35
+
+> Given the following definitions,
+>
+> ```cpp
+> char cval; int ival; unsigned int ui; float fval; double dval;
+> ```
+>
+> identify the implicit type conversions, if any, taking place:
+
+
+> ```cpp
+> cval = 'a' + 3; // 'a' promoted to int, then the result of ('a' + 3)(int) converted to char.
+> fval = ui - ival * 1.0; // ival converted to double , ui also converted to double. then that double converted(by truncation) to float.
+> dval = ui * fval; // ui promoted to float. then that float converted to double.
+> cval = ival + fval + dval;  // ival converted to float, then that float and fval converted to double. At last, that double converted to char(by truncation).
+> ```
+
+
+### Exercise 4.36
+
+> Assuming i is an int and d is a double write the expression `i *= d` so that it does integral, rather than floating-point, multiplication.
+
+```cpp
+i *= static_cast<int>(d);
+```
+
+
+### Exercise 4.37
+
+> Rewrite each of the following old-style casts to use a named cast:
+>
+> ```cpp
+> int i; double d; const string *ps; char *pc; void *pv;
+> pv = (void*)ps; 
+> i = int(*pc);   
+> pv = &d;        
+> pc = (char*)pv;
+> ```
+
+Rewrite:
+```cpp
+pv = static_cast<void*>(const_cast<string*>(ps));
+i = static_cast<int>(*pc);
+pv = static_cast<void*>(&d);
+pc = reinterpret_cast<char*>(pv);
+```
+
