@@ -205,7 +205,7 @@ vector<int> ivec{42};
 
 ### [Exercise 3.25](ex3_25.cpp)
 
-## Exercise 3.26
+### Exercise 3.26
 
 >In the binary search program on page 112,
 why did we write `mid=beg+(end-beg)/2;` instead of `mid=(beg+end) /2;`?
