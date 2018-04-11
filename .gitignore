@@ -3,3 +3,4 @@
 *~
 *.diff
 .DS_Store
+*.exe

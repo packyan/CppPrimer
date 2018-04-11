@@ -1,2 +1,0 @@
-max_string :	jjj
-max_Cnt: 	5
