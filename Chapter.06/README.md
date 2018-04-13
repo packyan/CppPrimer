@@ -152,7 +152,7 @@ Since this function doesn't change the argument,"const" shoud be added
 before string&s,otherwise this function is misleading and can't be used
 with const string or in a const function.
 
-## [Exercise 6.17](ex_6_17.cpp)
+### [Exercise 6.17](ex_6_17.cpp)
 
 Not the same.
 For the first one "const" was used, since no change need to do for the argument.
@@ -219,3 +219,116 @@ The type of `elem` in the `for` loop is `const std::string&`.
 ### Exercise 6.29
 
 Depends on the type of elements of `initializer_list`. When the type is [PODType](http://en.cppreference.com/w/cpp/concept/PODType), reference is unnecessary. Because `POD` is **cheap to copy**(such as `int`). Otherwise, Using reference(`const`) is the better choice.
+
+## Return Expression
+
+NOTE: Return Stetament have two forms, `return;` `return expression;`
+
+### Exercise 6.30
+
+Error (Clang):
+> Non-void function 'str_subrange' should return a value. // error #1
+>
+> Control may reach end of non-void function. // error #2
+
+### Exercise 6.31
+Never return a reference to a local object.
+If the function return type is a reference, do not return constants and the references of local temporary variables, because literal constants will be  converted to a local temporary variable and returned, which is an undefined behavior. It's `UB`.
+
+### Exercise 6.32
+
+legal, `ia` is a array with the size of 10, use `get()` function to give the values(0-9) to `ia`.
+
+### [Exercise 6.33](ex_6_33.cpp)
+
+### Exercise 6.34
+
+When the recursion termination condition becomes var != 0, two situations can happen : case 1 : If the argument is positive, recursion stops at 0. This is exactly what @shbling pointed out. case 2 : if the argument is negative, recursion would never stop. As a result,a stack overflow would occur.
+
+### Exercise 6.35
+
+the recursive function will always use `val` as the parameter. *a recursion loop* would happen.
+
+### Exercise 6.36
+
+```cpp
+string (&func(string (&arrStr)[10]))[10]
+```
+
+### Exercise 6.37
+
+```cpp
+using ArrT = string[10];
+ArrT& func1(ArrT& arr);
+
+auto func2(ArrT& arr) -> string(&)[10];
+
+string arrS[10];
+decltype(arrS)& func3(ArrT& arr);
+```
+
+I pefer the first one. Because it looks more intuitive.
+[TestCode](ex_6_36_37.cpp)
+## Exercise 6.38
+
+```cpp
+decltype(odd)& arrPtr(int i)
+{
+          return (i % 2) ? odd : even;
+}
+```
+
+## Fuction Overloaded
+
+### Exercise 6.39
+
+(a) illegal top-level const,so it's repeat statement.
+
+(b) illegal parameter is the same.
+
+(c) legal
+
+### Exercise 6.40
+
+(a) no error
+
+(b) ERROR: missing default argument on parameter 'wd', 'background'
+
+### Exercise 6.41
+
+(a) illegal. No matching function for call to 'init'.
+
+(b) legal, and match.
+
+(c) legal, but not match. `wd` would be setting to '*'.
+
+### Exercise 6.43
+
+Both two should put in a header. (a) is an inline function. (b) is the declaration of useful function. we always put them in the header.
+
+### Exercise 6.44
+
+```cpp
+inline bool isShorter(const string& s1, const string& s2)
+{
+    return s1.size() < s2.size();
+}
+
+### Exercise 6.46
+```
+
+### Exercise 6.45
+
+For example, the function `arrPtr` in [Exercise 6.38](#exercise-638) and `make_plural` in [Exercise 6.42](#exercise-642) should be defined as `inline`. But the function `func` in [Exercise 6.4](#exercise-64) shouldn't. Cause it just being call once and too many codes in the function.
+
+
+> Would it be possible to define `isShorter` as a `constexpr`? If so, do so. If not, explain why not.
+
+No.
+
+> A constexpr function is defined like any other function but must meet certain restrictions: The **return type** and **the type of each parameter** in a must be a literal type
+
+But `std::string`(parameter of `isShorter`) is not a literal type.
+
+more discusses: [#22](https://github.com/ReadingLab/Discussion-for-Cpp/issues/22)
+
