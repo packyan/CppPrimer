@@ -313,8 +313,6 @@ inline bool isShorter(const string& s1, const string& s2)
 {
     return s1.size() < s2.size();
 }
-
-### Exercise 6.46
 ```
 
 ### Exercise 6.45
@@ -332,3 +330,114 @@ But `std::string`(parameter of `isShorter`) is not a literal type.
 
 more discusses: [#22](https://github.com/ReadingLab/Discussion-for-Cpp/issues/22)
 
+
+### Exercise 6.46
+
+> Would it be possible to define `isShorter` as a `constexpr`? If so, do so. If not, explain why not.
+
+No.
+
+> A constexpr function is defined like any other function but must meet certain restrictions: The **return type** and **the type of each parameter** in a must be a literal type
+
+But `std::string`(parameter of `isShorter`) is not a literal type.
+
+more discusses: [#22](https://github.com/ReadingLab/Discussion-for-Cpp/issues/22)
+
+### [Exercise 6.47](ex6_47.cpp)
+
+### Exercise 6.48
+
+This loop let user input a word all the way until the word is sought or input is `EOF`.
+
+It isn't a good use of `assert`. The `assert` macro is often used to check for conditions that “**cannot happen**”. But the `assert` would always happen when users input `EOF` directly. The behavior is very natural, so the check is meaningless. using `assert(!cin || s != sought)` is more better.
+
+### Exercise 6.49
+
+candidate function:
+>Set of functions that are considered when resolving a function call. (all the functions
+>with the name used in the call for which a declaration is in scope at the time of the call.)
+
+viable function:
+>Subset of the candidate functions that could match a given call.
+>It have the same number of parameters as arguments to the call,
+>and each argument type can be converted to the corresponding parameter type.
+
+### Exercise 6.50
+
+(a) illegal. 2.56 match the `double`, but 42 match the `int`.
+
+(b) match `void f(int)`.
+
+(c) match `void f(int, int)`.
+
+(d) match `void f(double, double = 3.14)`.
+
+### [Exercise 6.51](ex6_51.cpp)
+
+### Exercise 6.52
+
+(a) Match through a promotion
+
+(b) Arithmetic type conversion
+
+### Exercise 6.53
+p208 chinese edition
+(a)
+
+```cpp
+int calc(int&, int&); // calls lookup(int&)
+int calc(const int&, const int&); // calls lookup(const int&) 底层const
+```
+
+(b)
+
+```cpp
+int calc(char*, char*); // calls lookup(char*)
+int calc(const char*, const char*); //calls lookup(const char *)
+```
+
+(c)
+
+illegal. both calls lookup(char*) top-level parameters, and non top-level const parameterscan't be differentiate。
+
+### Exercise 6.54
+
+@Mooophy's or @pezy's ?
+```cpp
+int func(int a, int b);
+
+using pFunc1 = decltype(func) *;
+typedef decltype(func) *pFunc2;
+using pFunc3 = int (*)(int a, int b);
+using pFunc4 = int(int a, int b);
+typedef int(*pFunc5)(int a, int b);
+using pFunc6 = decltype(func);
+
+std::vector<pFunc1> vec1;
+std::vector<pFunc2> vec2;
+std::vector<pFunc3> vec3;
+std::vector<pFunc4*> vec4;
+std::vector<pFunc5> vec5;
+std::vector<pFunc6*> vec6;
+```
+
+## Exercise 6.55
+
+```cpp
+int add(int a, int b) { return a + b; }
+int subtract(int a, int b) { return a - b; }
+int multiply(int a, int b) { return a * b; }
+int divide(int a, int b) { return b != 0 ? a / b : 0; }
+```
+
+## Exercise 6.56
+
+```cpp
+std::vector<decltype(func) *> vec{add, subtract, multiply, divide};
+for (auto f : vec)
+          std::cout << f(2, 2) << std::endl;
+```
+
+----
+
+[my_complete codes](ex_6_54_55_56.cpp).
