@@ -167,3 +167,94 @@ std::string getAddr() const { return this->addr; } // unnecessary
 
 From[@pezy](https://github.com/pezy/CppPrimer/)
 
+### [Exercise 7.41](ex_07_41_sales_data_test.cpp)
+### Exercise 7.42
+
+```cpp
+class Tree{
+    Tree(int p, int lc, int rc): parent(p),left_child(lc),right_child(rc){}
+    Tree(int p): Tree(p,0,0){}
+private:
+    int parent;
+    int left_child;
+    int right_child;
+};
+```
+
+### Exercise 7.43
+
+```cpp
+class NoDefault{
+NoDefault(int ii):i(ii){}
+private:
+    int i;
+    int j;
+}
+
+class C{
+    C():nodef(0) {}
+private:   
+    NoDefault nodef;
+
+}
+```
+
+### Exercise 7.44
+illegal, cause there are ten elements, each would be value initialized. But no default constructor for NoDefault type.
+
+note: candidate constructor (the implicit move constructor) not viable: requires 1 argument, but 0 were provided
+
+### Exercise 7.45
+legal, cause `C` have the default constructor.
+
+### Exercise7.46
+
+1. a) A class must provide at least one constructor. (untrue, "The compiler-generated constructor is known as the synthesized default constructor.")
+2. b) A default constructor is a constructor with an empty parameter list. (untrue, A default constructor is a constructor that is used if no initializer is supplied.What's more, A constructor that supplies default arguments for all its parameters also defines the default constructor)
+3. c) If there are no meaningful default values for a class, the class should not provide a default constructor. (untrue, the class should provide.)
+4. d) If a class does not define a default constructor, the compiler generates one that initializes each data member to the default value of its associated type. (untrue, only if our class does not explicitly define any constructors, the compiler will implicitly define the default constructor for us.)
+
+
+### Exercice 7.54
+Should not be claimed as  `constexpr `, cause a `constexpr ` function must contain a ``return`` statement.
+
+### Exercise 7.55
+yes.
+An aggregate class whose data members are all of literal type is a literal class.
+
+### Exercise 7.56
+What is a static class member?
+A class member that is associated with the class, rather than with individual objects of the class type.
+What are the advantages of static members?
+each object can no need to store a common data. And if the data is changed, each object can use the new value.
+How do they differ from ordinary members?
+1. a static data member can have incomplete type.
+2. we can use a static member as a default argument.
+
+[Exercise 7.57](https://github.com/pezy/CppPrimer/blob/master/ch07/ex7_57.h)
+form [@pezy](https://github.com/pezy/CppPrimer/)
+### Exercise 7.58
+```cpp
+static double rate = 6.5;
+                ^
+            rate should be a constant expression.
+
+static vector<double> vec(vecSize);
+                            ^
+            we may not specify an in-class initializer inside parentheses.
+```
+Fixed:
+```cpp
+// example.h
+class Example {
+public:
+    static constexpr double rate = 6.5;
+    static const int vecSize = 20;
+    static vector<double> vec;
+};
+
+// example.C
+#include "example.h"
+constexpr double Example::rate;
+vector<double> Example::vec(Example::vecSize);
+```
