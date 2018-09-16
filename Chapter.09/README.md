@@ -240,7 +240,8 @@ If the container holds elements of a class type and resize adds elements, we mus
 ### Exercise 9.32
  @Brief  In the program on page 354 would it be legal to write the call to
 //  insert as follows?
-//          If not, why not?
+//          If not, why not
+
 //          iter = vi.insert(iter, *iter++);
 //  @Answer the statement is illegal, cause as said in Standard [5.2.2] :
 //          "The order of evaluation of arguments is unspecified."
@@ -258,6 +259,107 @@ If the container holds elements of a class type and resize adds elements, we mus
 
 crash, cause the **iterator is invalid after insert**. Because Iterators, pointers, and references to a vector or string are invalid if the container was reallocated.
 
+
 ### [Exercise 9.33](ex_09_34.cpp)
  "infinite loop". Casue the `++iter` out of the `while` loop. But
  even through add brackets it is still infinite loop.
+
+### Exercise 9.34 
+ >Explain the difference between a vector’s capacity and its size.
+ Explain the difference between a vector’s capacity and its size.
+
+The size of a container is the number of elements it already holds;
+
+The capacity is how many elements it can hold before more space must be allocated.
+The size of a container is the number of elements it already holds;
+
+The capacity is how many elements it can hold before more space must be allocated.
+
+### Exercise 9.36
+> Can a container have a capacity less than its size?
+
+cannot.
+
+### Exercise 9.37
+Why don’t list or array have a capacity member?
+
+list elements does not store contiguously. array has the fixed size, thus cannot added elements to it.
+
+### Exercise 9.38
+```cpp
+//! @Alan
+//!
+//! Exercise 9.38:
+//! Write a program to explore how vectors grow in the library you use.
+//!
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+int main()
+{
+    std::vector<std::string> v;
+    std::string word;
+
+    while (std::cin >> word) {
+        v.push_back(word);
+        std::cout << v.capacity() << "\n";
+    }
+
+    return 0;
+}
+```
+
+### Exercise 9.39
+>Explain what the following program fragment does:
+
+```cpp
+vector<string> svec;
+svec.reserve(1024);
+string word;
+while (cin >> word)
+    svec.push_back(word);
+svec.resize(svec.size()+svec.size()/2);
+```
+
+The while loop will read words from cin and store them in out vector. Even if we initially reserved 1024 elements, if there are more words read from cin, our vector's capacity will be automatically increased (most implementations will double the previous capacity) to accommodate them.
+
+And now comes the catch. resize() is different from reserve(). In this case resize() will add another svec.size()/2 value initialized elements to svec. If this exceeds svec.capacity() it will also automatically increase it to accommodate the new elements.
+
+### Exercise 9.40
+>If the program in the previous exercise reads 256 words, what is its likely capacity after it is resized? What if it reads 512? 1,000? 1,048?
+
+read	size	capacity
+256	384	1024
+512	768	1024
+1000	1500	2000(clang is 2048)
+1048	1572	2048
+
+### [Exercise 9.41](ex_09_41.cpp)
+
+### Exercise 9.42
+>Given that you want to read a character at a time into a string, and you know that you need to read at least 100 characters, how might you improve the performance of your program?
+
+Use member reserve(120) to allocate enough space for this string. (@Mooophy)
+
+### [Exercise 9.43](https://github.com/pezy/CppPrimer/blob/master/ch09/ex9_43.cpp)
+
+### [Exercise 9.44](ex_09_44.cpp)
+
+### [Exercise 9.45](ex_09_45.cpp)
+
+### [Exercise 9.46](ex_09_46.cpp)
+
+### Exercise 9.47 [find_first_of](ex_09_47.cpp)||[find_first_not_of](ex_09_47_1.cpp)
+
+### Exercise 9.48
+>Given the definitions of name and numbers on page 365, what does numbers.find(name) return?
+
+string::npos
+
+### [Exercise 9.49](ex_09_49.cpp)
+
+### [Exercise 9.50](ex_09_50.cpp)
+
+### [Exercise 9.51](ex_09_51.cpp)
